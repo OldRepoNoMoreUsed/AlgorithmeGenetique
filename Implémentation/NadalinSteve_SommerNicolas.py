@@ -3,6 +3,7 @@ import sys
 from pygame.locals import KEYDOWN, MOUSEBUTTONDOWN
 
 def drawWindow():
+    listeCity = set()
     RED = (255, 0, 0)
     (width, height) = (1800, 900)
     pygame.init()
@@ -17,9 +18,17 @@ def drawWindow():
             elif event.type == MOUSEBUTTONDOWN:
                 pygame.draw.circle(screen, RED, pygame.mouse.get_pos(), 5)
                 print(pygame.mouse.get_pos())
+                listeCity.add(pygame.mouse.get_pos())
                 pygame.display.flip()
+            elif event.type == KEYDOWN:
+                return screen, listeCity
     pygame.display.flip()
 
+def drawPath(positions, screen):
+    #for position in positions:
+    #    pygame.draw.circle(screen, (255, 0, 0), position, 5)
+    #    pygame.display.flip()
+    print("Affichage chemin")
 
 def onClick(event):
     cx = event.xdata
@@ -34,9 +43,10 @@ def readFile(File):
 
 def ga_solve(File=None, gui=True, maxTime=0):
     if(gui is True):
-        drawWindow()
+        screen, liste = drawWindow()
     else:
         readFile(File)
+    drawPath(liste, screen)
 
 
 if __name__ == '__main__':
